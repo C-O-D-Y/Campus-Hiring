@@ -1,5 +1,6 @@
 package com.campushiring.services;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -51,6 +52,10 @@ public class QuestionsOptionsImp {
 	@Transactional
 	public List<Options> getOptions(int fkQuestionId) {
 		List<Options> options = optionsRepo.findByForeignKey(fkQuestionId);
+		if (options == null) {
+			return new ArrayList<Options>();
+		}
+
 		return options;
 	}
 }
