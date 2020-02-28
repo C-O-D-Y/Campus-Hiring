@@ -11,6 +11,11 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.campushiring.pojo.Options;
+import com.campushiring.pojo.Questions;
+import com.campushiring.repositories.OptionsRepo;
+import com.campushiring.repositories.QuestionsRepo;
+
 @Service
 public class QuestionsOptionsImp {
 
