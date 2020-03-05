@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.campushiring.pojo.Questions;
+import com.campushiring.entity.Questions;
 
 @Repository
 public interface QuestionsRepo extends CrudRepository<Questions, Integer> {

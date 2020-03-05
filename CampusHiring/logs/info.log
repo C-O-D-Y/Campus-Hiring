@@ -1,0 +1,20 @@
+2020-03-05 15:25:13 [http-nio-8088-exec-1] INFO  c.c.controllers.CreateOperations - All Questions are fetched
+2020-03-05 15:25:13 [http-nio-8088-exec-4] INFO  c.c.controllers.CreateOperations - All Questions are fetched
+2020-03-05 15:25:27 [http-nio-8088-exec-7] INFO  c.c.controllers.CreateOperations - Response has been fetched
+2020-03-05 15:25:33 [http-nio-8088-exec-8] ERROR c.c.controllers.CreateOperations - Exception Came With Code 404 NOT_FOUND
+2020-03-05 15:26:48 [main] INFO  com.campushiring.CampusHiring - Starting CampusHiring on ATMECSINLT-038 with PID 14632 (started by saurabh.chauhan in C:\Users\saurabh.chauhan\Spring Workspace\CampusHiring)
+2020-03-05 15:26:48 [main] DEBUG com.campushiring.CampusHiring - Running with Spring Boot v2.2.2.RELEASE, Spring v5.2.2.RELEASE
+2020-03-05 15:26:48 [main] INFO  com.campushiring.CampusHiring - No active profile set, falling back to default profiles: default
+2020-03-05 15:26:57 [main] INFO  com.campushiring.CampusHiring - Started CampusHiring in 9.559 seconds (JVM running for 11.864)
+2020-03-05 15:27:33 [http-nio-8088-exec-2] ERROR c.c.controllers.CreateOperations - Exception Came With Code 404 NOT_FOUND
+2020-03-05 15:27:37 [http-nio-8088-exec-3] INFO  c.c.controllers.CreateOperations - Response has been fetched
+2020-03-05 15:27:45 [http-nio-8088-exec-4] INFO  c.c.controllers.CreateOperations - Options has been Created
+2020-03-05 15:27:53 [http-nio-8088-exec-5] INFO  c.c.controllers.CreateOperations - All Questions are fetched
+2020-03-05 15:27:53 [http-nio-8088-exec-6] INFO  c.c.controllers.CreateOperations - All Questions are fetched
+2020-03-05 15:27:53 [http-nio-8088-exec-7] INFO  c.c.controllers.CreateOperations - All Questions are fetched
+2020-03-05 16:16:34 [main] INFO  com.campushiring.CampusHiring - Starting CampusHiring on ATMECSINLT-038 with PID 14780 (started by saurabh.chauhan in C:\Users\saurabh.chauhan\Spring Workspace\CampusHiring)
+2020-03-05 16:16:34 [main] DEBUG com.campushiring.CampusHiring - Running with Spring Boot v2.2.2.RELEASE, Spring v5.2.2.RELEASE
+2020-03-05 16:16:34 [main] INFO  com.campushiring.CampusHiring - No active profile set, falling back to default profiles: default
+2020-03-05 16:16:51 [main] INFO  com.campushiring.CampusHiring - Started CampusHiring in 17.24 seconds (JVM running for 21.678)
+2020-03-05 16:18:03 [http-nio-8088-exec-7] INFO  c.c.controllers.CreateOperations - User had Created or updated
+2020-03-05 16:18:09 [http-nio-8088-exec-8] INFO  c.c.controllers.CreateOperations - User had Created or updated

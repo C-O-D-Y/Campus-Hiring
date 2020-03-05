@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.campushiring.pojo.Options;
+import com.campushiring.entity.Options;
 
 @Repository
 public interface OptionsRepo extends CrudRepository<Options, Integer> {

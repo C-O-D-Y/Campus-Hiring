@@ -9,7 +9,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.campushiring.pojo.Response;
+import com.campushiring.entity.Response;
 import com.campushiring.repositories.ResponseRepo;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,10 +47,9 @@ public class ResponseImpl {
 		Response responses = readJsonFileForResponse(
 				"C:\\Users\\saurabh.chauhan\\Spring Workspace\\CampusHiring\\src\\main\\java\\com\\campushiring\\json\\Response.json");
 		Response response = new Response(responses.getResponseId(), responses.getUserId(), responses.getQuestionId(),
-				responses.getSelectedOptionId());
+				responses.getSelectedOptionId(), responses.getTestId());
 		// Creating Options
-	
-		
+
 		return response;
 	}
 

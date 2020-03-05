@@ -1,5 +1,6 @@
 package com.campushiring.services;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -11,8 +12,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.campushiring.pojo.Options;
-import com.campushiring.pojo.Questions;
+import com.campushiring.entity.Options;
+import com.campushiring.entity.Questions;
 import com.campushiring.repositories.OptionsRepo;
 import com.campushiring.repositories.QuestionsRepo;
 
@@ -49,10 +50,9 @@ public class QuestionsOptionsImp {
 	}
 
 	@Transactional
-	public Questions getQuestions(int questionId) {
+	public Questions getQuestions(int questionId) throws SQLException {
 		Questions question = questionsRepo.findById(questionId).orElse(new Questions());
-		return question;
-	}
+		return question;}
 
 	@Transactional
 	public List<Options> getOptions(int fkQuestionId) {

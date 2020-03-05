@@ -1,12 +1,16 @@
 package com.campushiring.controllers;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.ws.rs.Consumes;
 
+import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,11 +20,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.campushiring.customExceptionHandling.ExceptionHandling;
-import com.campushiring.pojo.Options;
-import com.campushiring.pojo.Questions;
-import com.campushiring.pojo.Response;
+import com.campushiring.entity.Options;
+import com.campushiring.entity.Questions;
+import com.campushiring.entity.Response;
+import com.campushiring.entity.User;
+import com.campushiring.pojo.OptionsDTO;
+import com.campushiring.pojo.QuestionsDTO;
+import com.campushiring.pojo.QuestionsOptionsDTO;
 import com.campushiring.repositories.QuestionsRepo;
 import com.campushiring.repositories.ResponseRepo;
+import com.campushiring.repositories.UserRepo;
 import com.campushiring.services.QuestionsOptionsImp;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -40,6 +49,12 @@ public class CreateOperations {
 	@Autowired
 	QuestionsRepo questionsRepo;
 
+	@Autowired
+	UserRepo userRepo;
+
+	Logger LOG;
+	ModelMapper modelMapper = new ModelMapper();
+
 //	public Questions readJsonFile(String filePath) {
 //
 //		try {
@@ -58,47 +73,92 @@ public class CreateOperations {
 //			e.printStackTrace();
 //		}
 //		return questions;
+
 //	}
+
+	public CreateOperations() {
+
+		LOG = LoggerFactory.getLogger(CreateOperations.class);
+	}
 
 	@PostMapping(path = "/sc/setQuestion")
 	@ResponseBody
 	@Consumes({ javax.ws.rs.core.MediaType.APPLICATION_JSON })
 	@JsonIgnoreProperties(ignoreUnknown = true)
 	public Questions setQuestionsAndOptions(@RequestBody Questions questions) {
+
 		qoi.addQuestions(questions);
+		LOG.info("Question has been Created");
 		return questions;
 	}
 
 	@GetMapping(path = "/sc/getQuestion/{id}")
 	@ResponseBody()
-	public Questions getQuestions(@PathVariable Integer id) throws ExceptionHandling {
+	public QuestionsOptionsDTO getQuestions(@PathVariable Integer id) throws ExceptionHandling {
 		try {
+			QuestionsOptionsDTO ty = null;
+
 			Questions qe = qoi.getQuestions(id);
-			if (qe.getQuestion_id() == 0)
-				throw new ExceptionHandling("Question for the given QuestionId cannot be found");
-			qe.setOptions(null);
-			return qe;
-		} catch (Exception e) {
-			throw new ExceptionHandling("Question for the given QuestionId cannot be found");
+
+			if (qe.getQuestion_id() == 0) {
+				ExceptionHandling.setHttpCode(HttpStatus.NOT_FOUND);
+				throw new ExceptionHandling("no content");
+			}
+
+			ty = new QuestionsOptionsDTO();
+			modelMapper.map(qe, ty);
+
+			LOG.info("Question had fetched");
+			return ty;
 		}
+		// catch(SQLException ve) {System.out.println("sbfuy");}
+		catch (SQLException sqle) {
+			LOG.error("Exception Came With Code" + HttpStatus.INTERNAL_SERVER_ERROR);
+			throw new ExceptionHandling("no content");
+		} catch (Exception e) {
+
+			LOG.error("Exception Came With Code" + HttpStatus.BAD_REQUEST);
+			throw new ExceptionHandling("no content");
+
+		}
+
 	}
 
 	@GetMapping(path = "/sc/getOptions/{id}")
 	@ResponseBody()
-	public List<Options> getOptions(@PathVariable(name = "id") Integer id) throws ExceptionHandling {
+	public ArrayList<OptionsDTO> getOptions(@PathVariable(name = "id") Integer id) throws ExceptionHandling {
 		try {
-			List<Options> option = qoi.getOptions(id);
+			OptionsDTO ty = null;
+			ArrayList<OptionsDTO> dto = new ArrayList<OptionsDTO>();
+
+			ArrayList<Options> option = (ArrayList<Options>) qoi.getOptions(id);
+
 			if (option.get(0).getOption_id() == 0) {
-				throw new ExceptionHandling("Options for the given QuestionId cannot be found");
+				ExceptionHandling.setHttpCode(HttpStatus.NOT_FOUND);
+				throw new ExceptionHandling("no content");
 			}
 			for (Options op : option) {
-				op.setIs_correct("");
-				op.setQuestions(null);
+				ty = new OptionsDTO();
+				modelMapper.map(op, ty);
+				dto.add(ty);
 			}
-			return option;
-		} catch (Exception e) {
-			throw new ExceptionHandling("Options for the given QuestionId cannot be found");
+
+			LOG.info("Options has been Created");
+
+			return dto;
 		}
+
+		catch (NullPointerException npe) {
+			throw new ExceptionHandling("NPE");
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+			ExceptionHandling.setHttpCode(HttpStatus.NOT_ACCEPTABLE);
+			LOG.error("Exception Came With Code " + HttpStatus.NOT_ACCEPTABLE);
+			throw new ExceptionHandling("no content");
+		}
+
 	}
 
 	@GetMapping(path = "/sc/getResponse/{uid}/{qid}")
@@ -106,41 +166,74 @@ public class CreateOperations {
 	public Response getResponse(@PathVariable(required = true, name = "qid") Integer qid,
 			@PathVariable(required = true, name = "uid") Long uid) throws ExceptionHandling {
 		try {
+			System.out.println(qid + "   " + uid);
 			System.out.println("READ");
 //		Response response = ril.addResponse();
 			Response resp = resrep.findByQuestionIdAndUserId(qid, uid);
 
 			if (resp == null) {
-				throw new ExceptionHandling("Response of the usercannot be found");
+				System.out.println("resp null hai");
+				ExceptionHandling.setHttpCode(HttpStatus.NOT_FOUND);
+				throw new ExceptionHandling("no content");
 			}
+			LOG.info("Response has been fetched");
 			return resp;
 		} catch (Exception ex) {
-			throw new ExceptionHandling("Response of the usercannot be found");
+			ExceptionHandling.setHttpCode(HttpStatus.NOT_FOUND);
+			LOG.error("Exception Came With Code " + HttpStatus.NOT_FOUND);
+			throw new ExceptionHandling("no content");
 		}
 
 	}
 
 	@PutMapping(path = "/sc/setResponse", consumes = { "application/json" })
 	@ResponseBody()
-	public Response setOrUpdateResponse(@RequestBody Response updatedResponse) {
-
+	public Response setOrUpdateResponse(@RequestBody Response updatedResponse) throws SQLException {
 		resrep.save(updatedResponse);
+		LOG.info("Response had Created or updated");
 		return updatedResponse;
 
 	}
 
+	@PutMapping(path = "/sc/setUser", consumes = { "application/json" })
+	@ResponseBody()
+	public User setOrUpdateUser(@RequestBody User userInfo) {
+		userRepo.save(userInfo);
+		LOG.info("User had Created or updated");
+		return userInfo;
+	}
+
+	@GetMapping(path = "/sc/getAllUsers")
+	@ResponseBody()
+	public ArrayList<User> getAllUsers() {
+
+		ArrayList<User> allUsers = new ArrayList<User>();
+
+		Iterable<User> users = userRepo.findAll();
+		Iterator<User> itr = users.iterator();
+		while (itr.hasNext()) {
+			allUsers.add(itr.next());
+		}
+		return allUsers;
+	}
+
 	@GetMapping(path = "/sc/getAllQuestion")
 	@ResponseBody()
-	public List<Questions> getAllQuestions() {
+	public ArrayList<QuestionsDTO> getAllQuestions() {
+		QuestionsDTO ty = null;
+		ArrayList<QuestionsDTO> dto = new ArrayList<QuestionsDTO>();
+
 		Iterable<Questions> qe = questionsRepo.findAll();
 		Iterator<Questions> itr = qe.iterator();
-		List<Questions> allQuestions = new ArrayList<Questions>();
 		while (itr.hasNext()) {
 			Questions getQues = itr.next();
-			getQues.setOptions(null);
 
-			allQuestions.add(getQues);
+			ty = new QuestionsDTO();
+			modelMapper.map(getQues, ty);
+			dto.add(ty);
 		}
-		return allQuestions;
+
+		LOG.info("All Questions are fetched");
+		return dto;
 	}
 }

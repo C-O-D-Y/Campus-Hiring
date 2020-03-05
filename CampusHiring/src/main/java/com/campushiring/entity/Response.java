@@ -1,4 +1,4 @@
-package com.campushiring.pojo;
+package com.campushiring.entity;
 
 import java.io.Serializable;
 
@@ -27,6 +27,17 @@ public class Response implements Serializable {
 	@Column(name = "USER_ID")
 	private long userId;
 
+	@Column(name = "TEST_ID")
+	private String testId;
+
+	public String getTestId() {
+		return testId;
+	}
+
+	public void setTestId(String testId) {
+		this.testId = testId;
+	}
+
 	public long getUserId() {
 		return userId;
 	}
@@ -51,7 +62,6 @@ public class Response implements Serializable {
 		this.selectedOptionId = selectedOptionId;
 	}
 
-	
 	@Column(name = "QUESTION_ID")
 	private int questionId;
 
@@ -66,12 +76,13 @@ public class Response implements Serializable {
 		this.responseId = responseId;
 	}
 
-	public Response(int responseId, long userId, int questionId, int selectedOptionId) {
+	public Response(int responseId, long userId, int questionId, int selectedOptionId, String testId) {
 		super();
 		this.responseId = responseId;
 		this.userId = userId;
 		this.questionId = questionId;
 		this.selectedOptionId = selectedOptionId;
+		this.testId = testId;
 	}
 
 //	@OneToOne(cascade = CascadeType.ALL, targetEntity = Questions.class)

@@ -1,4 +1,4 @@
-package com.campushiring.pojo;
+package com.campushiring.entity;
 
 import java.io.Serializable;
 import java.util.HashSet;
