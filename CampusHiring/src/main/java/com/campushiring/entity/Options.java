@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,16 +32,14 @@ public class Options implements Serializable {
 	@Column(name = "IS_TRUE")
 	private String is_correct;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "FK_QuestionsId")
 	private Questions questions;
-
-//	@OneToOne(mappedBy = "fkoptionId", cascade = CascadeType.ALL)
-//	Response response = new Response();
 
 	public Options() {
 
 	}
+
 
 	public Options(Options options, Questions que) {
 		this.is_correct = options.is_correct;
@@ -58,6 +57,10 @@ public class Options implements Serializable {
 
 	public void setQuestions(Questions questions) {
 		this.questions = questions;
+	}
+
+	public Questions getQuestions() {
+		return questions;
 	}
 
 	public void setOption_id(int option_id) {

@@ -40,9 +40,8 @@ public class Questions implements Serializable {
 
 	@OneToMany(mappedBy = "questions", cascade = CascadeType.ALL)
 	Set<Options> options = new HashSet<Options>();
+	
 
-//	@OneToOne(mappedBy = "fkquestions", cascade = CascadeType.ALL)
-//	Response response = new Response();
 
 	public Questions(String statement, String type, String difficulty) {
 		this.statement = statement;

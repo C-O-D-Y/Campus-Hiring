@@ -154,3 +154,7 @@
 2020-03-10 16:08:59 [main] DEBUG com.campushiring.CampusHiring - Running with Spring Boot v2.2.2.RELEASE, Spring v5.2.2.RELEASE
 2020-03-10 16:08:59 [main] INFO  com.campushiring.CampusHiring - No active profile set, falling back to default profiles: default
 2020-03-10 16:09:09 [main] INFO  com.campushiring.CampusHiring - Started CampusHiring in 11.157 seconds (JVM running for 13.969)
+2020-03-10 16:18:42 [main] INFO  com.campushiring.CampusHiring - Starting CampusHiring on ATMECSINLT-038 with PID 13008 (started by saurabh.chauhan in C:\Users\saurabh.chauhan\Spring Workspace\CampusHiring)
+2020-03-10 16:18:42 [main] DEBUG com.campushiring.CampusHiring - Running with Spring Boot v2.2.2.RELEASE, Spring v5.2.2.RELEASE
+2020-03-10 16:18:42 [main] INFO  com.campushiring.CampusHiring - No active profile set, falling back to default profiles: default
+2020-03-10 16:18:53 [main] INFO  com.campushiring.CampusHiring - Started CampusHiring in 11.724 seconds (JVM running for 14.734)

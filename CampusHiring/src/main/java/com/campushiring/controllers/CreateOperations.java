@@ -2,13 +2,16 @@ package com.campushiring.controllers;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.campushiring.customExceptionHandling.ExceptionHandling;
@@ -27,6 +31,8 @@ import com.campushiring.entity.User;
 import com.campushiring.pojo.OptionsDTO;
 import com.campushiring.pojo.QuestionsDTO;
 import com.campushiring.pojo.QuestionsOptionsDTO;
+import com.campushiring.pojo.Result;
+import com.campushiring.pojo.Results;
 import com.campushiring.repositories.QuestionsRepo;
 import com.campushiring.repositories.ResponseRepo;
 import com.campushiring.repositories.UserRepo;
@@ -41,6 +47,7 @@ public class CreateOperations {
 
 	@Autowired
 	QuestionsOptionsImp qoi;
+
 //	@Autowired
 //	ResponseImpl ril;
 	@Autowired
@@ -54,27 +61,6 @@ public class CreateOperations {
 
 	Logger LOG;
 	ModelMapper modelMapper = new ModelMapper();
-
-//	public Questions readJsonFile(String filePath) {
-//
-//		try {
-//
-//			// create ObjectMapper instance
-//			ObjectMapper objectMapper = new ObjectMapper();
-//			in = new FileInputStream(new File(filePath));
-//			TypeReference<Questions> tp = new TypeReference<Questions>() {
-//			};
-//			questions = objectMapper.readValue(in, tp);
-//			System.out.println(", statement=" + questions.getStatement() + ", type=" + questions.getType()
-//					+ ", difficulty=" + questions.getDifficulty() + "]");
-//
-//		} catch (Exception e) {
-//			System.out.println("Catch");
-//			e.printStackTrace();
-//		}
-//		return questions;
-
-//	}
 
 	public CreateOperations() {
 
@@ -116,7 +102,7 @@ public class CreateOperations {
 			LOG.error("Exception Came With Code" + HttpStatus.INTERNAL_SERVER_ERROR);
 			throw new ExceptionHandling("no content");
 		} catch (Exception e) {
-
+			e.printStackTrace();
 			LOG.error("Exception Came With Code" + HttpStatus.BAD_REQUEST);
 			throw new ExceptionHandling("no content");
 
@@ -235,5 +221,37 @@ public class CreateOperations {
 
 		LOG.info("All Questions are fetched");
 		return dto;
+	}
+
+	@GetMapping(path = "/sc/getResult")
+	@ResponseBody()
+	public ArrayList<Result> getResult(@RequestParam(required = true, name = "userId") Long userId) {
+
+		ArrayList<Result> result = new ArrayList<Result>();
+		// HashMap<Integer, String> sdfdc = new HashMap<Integer, String>();
+		List<Options> gf = qoi.getResult(userId);
+		System.out.println("SIZE OF THE USERID IS " + gf.size());
+		System.out.println(userId);
+
+		for (Options sd : gf) {
+			Result ty = new Result();
+			ty.setQuestion_id(sd.getQuestions().getQuestion_id());
+			ty.setIs_correct(sd.getIs_correct());
+
+			result.add(ty);
+		}
+
+		LOG.info("Result is fetched");
+		return result;
+	}
+
+	@GetMapping(path = "/sc/getAllResult")
+	@ResponseBody()
+	public List<Results> getAllResult(@RequestParam(required = true, name = "testId") String testId) {
+		Results ty = null;
+		HashSet<Result> rt = new HashSet<Result>();
+		List<Results> ts = qoi.getAllResult(testId);
+		
+		return ts;
 	}
 }

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.campushiring.entity.Options;
 import com.campushiring.entity.Questions;
+import com.campushiring.pojo.Results;
 import com.campushiring.repositories.OptionsRepo;
 import com.campushiring.repositories.QuestionsRepo;
 
@@ -52,7 +53,8 @@ public class QuestionsOptionsImp {
 	@Transactional
 	public Questions getQuestions(int questionId) throws SQLException {
 		Questions question = questionsRepo.findById(questionId).orElse(new Questions());
-		return question;}
+		return question;
+	}
 
 	@Transactional
 	public List<Options> getOptions(int fkQuestionId) {
@@ -61,6 +63,18 @@ public class QuestionsOptionsImp {
 			return new ArrayList<Options>();
 		}
 
+		return options;
+	}
+
+	@Transactional
+	public List<Options> getResult(long user_Id) {
+		List<Options> options = optionsRepo.findByUserId(user_Id);
+		return options;
+	}
+
+	@Transactional
+	public List<Results> getAllResult(String test_Id) {
+		List<Results> options = optionsRepo.findByTestId(test_Id);
 		return options;
 	}
 }
