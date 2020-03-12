@@ -84,16 +84,4 @@ public class Response implements Serializable {
 		this.selectedOptionId = selectedOptionId;
 		this.testId = testId;
 	}
-
-//	@OneToOne(cascade = CascadeType.ALL, targetEntity = Questions.class)
-//	@JoinColumn(name = "FK_QuestionsId")
-//	private Integer fkquestions;
-//
-//	@OneToOne(cascade = CascadeType.ALL, targetEntity = Options.class)
-//	@JoinColumn(name = "FK_optionId")
-//	private Integer fkoptionId;
-//
-//	@OneToOne(cascade = CascadeType.ALL, targetEntity = User.class)
-//	@JoinColumn(name = "FK_UserId")
-//	private Integer fkuserId;
 }

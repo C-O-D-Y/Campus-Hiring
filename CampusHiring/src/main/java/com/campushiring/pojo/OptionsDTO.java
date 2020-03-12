@@ -25,5 +25,4 @@ public class OptionsDTO {
 	public String getOption() {
 		return option;
 	}
-
 }

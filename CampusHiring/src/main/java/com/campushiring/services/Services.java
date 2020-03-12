@@ -14,18 +14,21 @@ import org.springframework.stereotype.Service;
 
 import com.campushiring.entity.Options;
 import com.campushiring.entity.Questions;
-import com.campushiring.pojo.Results;
 import com.campushiring.repositories.OptionsRepo;
 import com.campushiring.repositories.QuestionsRepo;
+import com.campushiring.repositories.UserRepo;
 
 @Service
-public class QuestionsOptionsImp {
+public class Services {
 
 	@Autowired
 	QuestionsRepo questionsRepo;
 
 	@Autowired
 	OptionsRepo optionsRepo;
+
+	@Autowired
+	UserRepo resrep;
 
 	@Transactional
 	public void addQuestions(Questions questions) {
@@ -73,8 +76,8 @@ public class QuestionsOptionsImp {
 	}
 
 	@Transactional
-	public List<Results> getAllResult(String test_Id) {
-		List<Results> options = optionsRepo.findByTestId(test_Id);
+	public HashSet<Long> getAllResult(String test_Id) {
+		HashSet<Long> options = resrep.findByTestId(test_Id);
 		return options;
 	}
 }

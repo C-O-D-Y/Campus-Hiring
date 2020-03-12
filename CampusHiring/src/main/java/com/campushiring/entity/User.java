@@ -28,10 +28,21 @@ public class User implements Serializable {
 	private long mobile;
 	@Column(name = "BRANCH")
 	private String branch;
+	
+	@Column(name = "TEST_ID")
+	private String test_id;
 
 	public User() {
 		super();
 
+	}
+
+	public String getTest_id() {
+		return test_id;
+	}
+
+	public void setTest_id(String test_id) {
+		this.test_id = test_id;
 	}
 
 	public int getUserId() {
@@ -65,16 +76,4 @@ public class User implements Serializable {
 	public void setBranch(String branch) {
 		this.branch = branch;
 	}
-
-//	public Response getResponse() {
-//		return response;
-//	}
-//
-//	public void setResponse(Response response) {
-//		this.response = response;
-//	}
-//
-//	@OneToOne(mappedBy = "fkuserId", cascade = CascadeType.ALL)
-//	Response response = new Response();
-
 }

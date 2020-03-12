@@ -15,7 +15,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
-public class ResponseImpl {
+public class ReadJsonAndAddResponse {
 
 	@Autowired
 	ResponseRepo responseRepo;

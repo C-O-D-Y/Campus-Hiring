@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+
 @Entity
 @Table(name = "Options")
 public class Options implements Serializable {
@@ -40,20 +41,11 @@ public class Options implements Serializable {
 
 	}
 
-
 	public Options(Options options, Questions que) {
 		this.is_correct = options.is_correct;
 		this.option = options.option;
 		this.questions = que;
 	}
-
-//	public Response getResponse() {
-//		return response;
-//	}
-//
-//	public void setResponse(Response response) {
-//		this.response = response;
-//	}
 
 	public void setQuestions(Questions questions) {
 		this.questions = questions;
